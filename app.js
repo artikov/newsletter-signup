@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
+const dotenv = require("dotenv")
 
 const app = express();
 
@@ -32,14 +33,14 @@ app.post("/", function(req, res) {
 
   const jsonData = JSON.stringify(data);
 
-  const url = "https://us20.api.mailchimp.com/3.0/lists/3743f36217";
+  const URL = process.env.URL
 
   const options = {
     method: "POST",
-    auth: "oybek:ef8417be0b93ff7e8a4b52473e74819b-us20"
+    auth: process.env.auth
   }
 
-  const request = https.request(url, options, function(response) {
+  const request = https.request(URL, options, function(response) {
     if(response.statusCode === 200){
       res.sendFile(__dirname + "/success.html");
     }
@@ -64,9 +65,3 @@ app.listen(process.env.PORT || 3000, function() {
   console.log("running at 3000")
 })
 
-
-// api key
-// ef8417be0b93ff7e8a4b52473e74819b-us20
-
-// list id
-// 3743f36217
